@@ -1,5 +1,5 @@
 public class Method extends UMLComponent {
-    private String attributeTypes;
+    private String parametersType;
 
     public Method(String declaration) {
         String[] prototype = Parser.getMethodDeclaration(declaration);
@@ -8,8 +8,9 @@ public class Method extends UMLComponent {
         int len = parts.length;
 
         name = parts[len - 1];
+        type = parts[len - 2];
 
-        for (int i = len - 2; i >= 0; --i) {
+        for (int i = len - 3; i >= 0; --i) {
             String cur = parts[i];
             if (cur.equals("static"))
                 isStatic = true;
@@ -19,15 +20,22 @@ public class Method extends UMLComponent {
                 isFinal = true;
             else if (modifiers.contains(cur))
                 accessModifier = cur;
-            else
-                type = cur;
         }
 
         parts = prototype[1].split(" ");
         len = parts.length;
-        attributeTypes = parts[0];
+        parametersType = parts[0];
         for (int i = 2; i < len; i += 2)
-            attributeTypes += ", " + parts[i];
+            parametersType += ", " + parts[i];
+    }
+    
+    /**
+    * @return true if this component is a method
+    *         false otherwise
+    */
+    @Override
+    public boolean isMethod() {
+        return true;
     }
 
     /**
@@ -43,12 +51,12 @@ public class Method extends UMLComponent {
         if (isFinal)    s += "final ";
         if (type != null) s += type + " ";
 
-        return s  + name + "(" + attributeTypes + ")";
+        return s  + name + "(" + parametersType + ")";
     }
 
     public static void main(String[] args) {
 
-        String s = "public static void main(String[] args)";
+        String s = "public static void main(String[] args) throws Exception {};";
         Method test = new Method(s);
         System.out.println(test);
     }
