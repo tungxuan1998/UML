@@ -51,4 +51,36 @@ public abstract class UMLComponent {
 	public boolean isFinal() {
 		return this.isFinal;
 	}
+
+	/**
+	* @return true if this component is a class
+	*         false otherwise
+	*/
+	public boolean isClass() {
+		return type.equals("class");
+	}
+
+	/**
+	* @return true if this component is a interface
+	*         false otherwise
+	*/
+	public boolean isInterface() {
+		return type.equals("interface");
+	}
+
+	/**
+	* @return true if this component is a method
+	*         false otherwise
+	*/
+	public boolean isMethod() {
+		return false;
+	}
+
+	/**
+	* @return true if this component is a attribute
+	*         false otherwise
+	*/
+	public boolean isAttribute() {
+		return false;
+	}
 }
